@@ -46,7 +46,7 @@
 </head>
 <body>
     <div class="card">
-        <div class="title">[Your Name]</div>
+        <div class="title">Sharan madhav</div>
         <div class="subtitle">Software Developer</div>
         <p>Passionate about **low-level systems, networking, and OS development**.</p>
         <p>Currently working at Zoho on the **Survey team**.</p>
@@ -57,9 +57,9 @@
     <script>
         async function fetchDailyQuote() {
             try {
-                const response = await fetch("https://programming-quotes-api.herokuapp.com/quotes/random");
+                const response = await fetch("https://api.api-ninjas.com/v1/quotes");
                 const data = await response.json();
-                document.getElementById("dailyQuote").textContent = `"${data.en}" - ${data.author}`;
+                document.getElementById("dailyQuote").textContent = `"${data.quote}" - ${data.author}`;
             } catch (error) {
                 document.getElementById("dailyQuote").textContent = "Failed to load quote. Try again later.";
             }
