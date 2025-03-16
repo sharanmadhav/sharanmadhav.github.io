@@ -37,7 +37,7 @@ const character = document.getElementById('character');
         }
         setInterval(() => {
             repositionCharacter();
-        }, 1800);
+        }, 1500);
 
         character.addEventListener('click', () => {
             if (canBeCaught) {
