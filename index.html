@@ -3,56 +3,261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sharan madhav</title>
+    <title>Sharan Madhav</title>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Exo 2', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #1a1a1a;
-            color: white;
+            background: #1a1a2e;
             margin: 0;
+            overflow: hidden;
+            position: relative;
         }
-        .card {
-            background: #262626;
+        .bg-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(138, 43, 226, 0.25), rgba(255, 0, 127, 0.15), transparent);
+            z-index: -1;
+            animation: pulse 8s infinite ease-in-out;
+        }
+        .bg-particles::before {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            box-shadow: 0 0 5px #fff;
+            animation: float 10s infinite linear;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.15); opacity: 0.9; }
+        }
+        @keyframes float {
+            0% { top: 0; left: 10%; }
+            100% { top: 100%; left: 90%; }
+        }
+        .battle-card {
+            width: 400px;
+            background: linear-gradient(135deg, #0f0f1a 0%, #141428 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7), 0 0 70px rgba(75, 0, 130, 0.5);
+            position: relative;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            z-index: 1;
+        }
+        .battle-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 90px rgba(75, 0, 130, 0.7);
+        }
+        .header {
+            background: linear-gradient(90deg, #8a2be2, #ff007f);
             padding: 20px;
-            border-radius: 10px;
             text-align: center;
-            width: 350px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
+            color: #fff;
+            font-size: 28px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            position: relative;
+            border-bottom: 4px solid rgba(255, 255, 255, 0.4);
         }
-        .card:hover {
-            transform: scale(1.05);
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #fff, transparent);
+            animation: header-glow 2.5s infinite ease-in-out;
+        }
+        @keyframes header-glow {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        .content {
+            padding: 30px;
+            color: #e0e0e0;
+            text-align: center;
         }
         .title {
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 22px;
+            font-weight: 600;
+            color: #00eaff;
+            margin-bottom: 15px;
+            text-shadow: 0 0 8px rgba(0, 234, 255, 0.7);
+            transition: transform 0.3s ease, text-shadow 0.3s ease;
+        }
+        .title:hover {
+            transform: scale(1.05);
+            text-shadow: 0 0 12px rgba(0, 234, 255, 1);
         }
         .subtitle {
             font-size: 16px;
-            color: #bbb;
-            margin-bottom: 15px;
+            font-weight: 600;
+            color: #ff4da6;
+            margin-bottom: 20px;
+            text-shadow: 0 0 6px rgba(255, 77, 166, 0.7);
+            transition: transform 0.3s ease, text-shadow 0.3s ease;
         }
-        .quote {
-            font-style: italic;
+        .subtitle:hover {
+            transform: scale(1.05);
+            text-shadow: 0 0 10px rgba(255, 77, 166, 1);
+        }
+        .skills {
             font-size: 14px;
-            color: #ffcc00;
-            margin-top: 20px;
+            margin: 12px 0;
+            line-height: 1.6;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        .skills:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+        b {
+            color: #ffd700;
+            font-weight: 700;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.7);
+        }
+        .stats-panel {
+            margin-top: 25px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            border: 2px solid #8a2be2;
+            position: relative;
+            width: 340px;
+            height: 200px;
+            margin-left: auto;
+            margin-right: auto;
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+        .stats-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #8a2be2, #ff007f);
+            animation: progress 3s infinite linear;
+            z-index: 1;
+        }
+        @keyframes progress {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .github-image {
+            box-shadow: 0 0 25px rgba(138, 43, 226, 0.7);
+            transition: transform 0.3s ease;
+            position: relative;
+            display: block;
+            object-fit: cover;
+        }
+        .stats-panel:hover .github-image {
+            transform: scale(1.02);
+        }
+        .holo-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(138, 43, 226, 0.2), rgba(255, 0, 127, 0.2));
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 2;
+            animation: holo-shift 4s infinite linear;
+        }
+        @keyframes holo-shift {
+            0% { transform: translateX(-50%) translateY(-50%); }
+            100% { transform: translateX(50%) translateY(50%); }
+        }
+        /* Character Styles */
+        .character {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: url('https://img.icons8.com/?size=100&id=2i01YHl5my1Y&format=png&color=000000') no-repeat center;
+            background-size: contain;
+            z-index: 3;
+            top: 20%;
+            left: 20%;
+            animation: bob 2s infinite ease-in-out;
+            cursor: pointer;
+            transition: transform 0.2s ease; /* Faster transition */
+        }
+        .character.run-away {
+            transform: translateX(-200vw) translateY(-200vh); /* Off-screen dash */
+        }
+        @keyframes bob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        /* Message Styles */
+        .catch-message {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: #00eaff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            text-shadow: 0 0 5px #00eaff;
+            z-index: 4;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .catch-message.show {
+            opacity: 1;
+        }
+        /* Counter Styles */
+        .catch-counter {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ffd700;
+            font-size: 14px;
+            text-shadow: 0 0 5px #ffd700;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 5px 10px;
+            border-radius: 5px;
+            z-index: 3;
         }
     </style>
 </head>
 <body>
-    <div class="card">
-        <div class="title">Sharan madhav</div>
-        <div class="subtitle">Software Developer</div>
-        <p>Passionate about <b>low-level systems, networking, and OS development</b>.</p>
-        <p>Currently working at Zoho on the <b>Survey team</b>.</p>
-        <div align="center">
-          <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=sharanmadhav&layout=compact&langs_count=7&theme=tokyonight"/>
+    <div class="bg-particles"></div>
+    <div class="battle-card">
+        <div class="header">Sharan Madhav</div>
+        <div class="content">
+            <div class="title">Full Stack Developer</div>
+            <div class="subtitle">Zoho Survey Team</div>
+            <div class="skills"><b>Enterprise Development | Performance Tuning | Security & Monitoring </b></div>
+            <div class="stats-panel">
+                <img class="github-image" src="https://github-readme-stats.vercel.app/api/top-langs/?username=sharanmadhav&layout=compact&langs_count=7&theme=tokyonight"/>
+            </div>
         </div>
+        <div class="holo-effect"></div>
     </div>
+    <div class="character" id="character"></div>
+    <div class="catch-message" id="catchMessage">Catch Me!</div>
+    <div class="catch-counter" id="catchCounter">Catches: 0</div>
+    <script src="styles.js"></script>
 </body>
 </html>
