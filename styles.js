@@ -24,7 +24,7 @@ const character = document.getElementById('character');
             .catch(error => console.error('Error posting randomString:', error));
             localStorage.setItem("SDRNDSTR",randomString);
         }
-        const apiUrl = `https://portfoli-f671f-default-rtdb.firebaseio.com/${randomString}.json`;
+        const apiUrl = `https://portfoli-f671f-default-rtdb.firebaseio.com/catchCount/${randomString}.json`;
         function updateMessagePosition() {
             const charRect = character.getBoundingClientRect();
             catchMessage.style.top = `${charRect.top - 30}px`;
