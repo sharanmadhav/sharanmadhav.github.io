@@ -4,11 +4,24 @@ const character = document.getElementById('character');
         let catchCount = 0;
         let canBeCaught = true;
         let randomString;
+        const uniqueStrUrl = `https://portfoli-f671f-default-rtdb.firebaseio.com/uniqueStrUrl.json`;
         if(localStorage.getItem("SDRNDSTR") != null){
             randomString = localStorage.getItem("SDRNDSTR");
         }
         else{
             randomString = Math.random().toString(36).substring(2, 10);
+            fetch(uniqueStrUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ uniqueStr: randomString })
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                console.log('randomString posted successfully:', randomString);
+            })
+            .catch(error => console.error('Error posting randomString:', error));
             localStorage.setItem("SDRNDSTR",randomString);
         }
         const apiUrl = `https://portfoli-f671f-default-rtdb.firebaseio.com/${randomString}.json`;
