@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Google Interview Timeline</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Exo 2', sans-serif;
+      background: linear-gradient(135deg, #0e0e1f 0%, #1a1a3a 100%);
+      color: #fff;
+      padding: 2rem;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      background: rgba(20, 20, 40, 0.9);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 8px 32px rgba(0, 234, 255, 0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.75rem;
+      color: #00eaff;
+      margin-bottom: 3rem;
+      font-weight: 700;
+      text-shadow: 0 0 12px rgba(0, 234, 255, 0.7);
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .step {
+      position: relative;
+      margin-bottom: 3rem;
+      padding: 1.5rem;
+      background: rgba(40, 40, 80, 0.5);
+      border-radius: 12px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .step:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 20px rgba(0, 234, 255, 0.3);
+    }
+
+    .step.completed {
+      border: 2px solid #00ff00;
+      animation: glow 2s infinite;
+    }
+
+    .step.in-progress {
+      border: 2px solid #ffd700;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes glow {
+      0% { border-color: #ff0000; box-shadow: 0 0 8px #ff0000; }
+      33% { border-color: #00ff00; box-shadow: 0 0 8px #00ff00; }
+      66% { border-color: #0000ff; box-shadow: 0 0 8px #0000ff; }
+      100% { border-color: #ff0000; box-shadow: 0 0 8px #ff0000; }
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+    }
+
+    .step.completed::after {
+      content: '✔';
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      font-size: 1.2rem;
+      color: #00eaff;
+      text-shadow: 0 0 6px rgba(0, 234, 255, 0.7);
+    }
+
+    .step.in-progress::after {
+      content: '';
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      width: 1rem;
+      height: 1rem;
+      border: 2px solid #ffd700;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .content h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #ffd700;
+      margin-bottom: 0.75rem;
+      text-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
+    }
+
+    .content p {
+      font-size: 1.1rem;
+      color: #ccc;
+      line-height: 1.6;
+    }
+
+    .step.completed h2 {
+      color: #00eaff;
+      text-shadow: 0 0 10px rgba(0, 234, 255, 1);
+    }
+
+    .step.completed p {
+      color: #a0f0ff;
+    }
+
+    .step.in-progress h2 {
+      color: #ffeb3b;
+      text-shadow: 0 0 8px rgba(255, 235, 59, 0.7);
+    }
+
+    .step.in-progress p {
+      color: #fff59d;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      top: 0;
+      bottom: 0;
+      width: 6px;
+      background: linear-gradient(to bottom, #ff0000, #00ff00, #0000ff, #ff0000);
+      border-radius: 3px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+
+    .expandable-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+      padding: 0 1rem;
+    }
+
+    .expandable-content.active {
+      max-height: 800px;
+      padding: 1.5rem 1rem;
+    }
+
+    .sub-timeline {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .sub-step {
+      position: relative;
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background: rgba(60, 60, 100, 0.6);
+      border-radius: 8px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .sub-step:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 15px rgba(0, 234, 255, 0.2);
+    }
+
+    .sub-step.completed {
+      border: 2px solid #00ff00;
+      animation: glow 2s infinite;
+    }
+
+    .sub-step.in-progress {
+      border: 2px solid #ffd700;
+      animation: pulse 1.5s infinite;
+    }
+
+    .sub-step.completed::after {
+      content: '✔';
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      font-size: 1rem;
+      color: #00eaff;
+      text-shadow: 0 0 6px rgba(0, 234, 255, 0.7);
+    }
+
+    .sub-step.in-progress::after {
+      content: '';
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      width: 0.8rem;
+      height: 0.8rem;
+      border: 2px solid #ffd700;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    .sub-step.completed h3 {
+      color: #00eaff;
+      text-shadow: 0 0 8px rgba(0, 234, 255, 1);
+    }
+
+    .sub-step.completed p {
+      color: #a0f0ff;
+    }
+
+    .sub-step.in-progress h3 {
+      color: #ffeb3b;
+      text-shadow: 0 0 8px rgba(255, 235, 59, 0.7);
+    }
+
+    .sub-step.in-progress p {
+      color: #fff59d;
+    }
+
+    .sub-timeline::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(to bottom, #ff0000, #00ff00, #0000ff, #ff0000);
+      border-radius: 2px;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+    }
+
+    .sub-content h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #ffd700;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 6px rgba(255, 215, 0, 0.7);
+    }
+
+    .sub-content p {
+      font-size: 0.95rem;
+      color: #ccc;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 1rem;
+      }
+
+      .container {
+        padding: 1.5rem;
+        border-radius: 16px;
+      }
+
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .timeline {
+        padding-left: 1.5rem;
+      }
+
+      .step {
+        margin-bottom: 2rem;
+        padding: 1rem;
+      }
+
+      .content h2 {
+        font-size: 1.5rem;
+      }
+
+      .content p {
+        font-size: 0.95rem;
+      }
+
+      .timeline::before {
+        left: 7px;
+        width: 4px;
+      }
+
+      .expandable-content.active {
+        max-height: 1000px;
+      }
+
+      .sub-timeline {
+        padding-left: 1rem;
+      }
+
+      .sub-timeline::before {
+        left: 4px;
+        width: 3px;
+      }
+
+      .sub-content h3 {
+        font-size: 1.1rem;
+      }
+
+      .sub-content p {
+        font-size: 0.85rem;
+      }
+
+      .step.completed::after,
+      .sub-step.completed::after {
+        font-size: 0.9rem;
+        top: 0.3rem;
+        right: 0.3rem;
+      }
+
+      .step.in-progress::after,
+      .sub-step.in-progress::after {
+        width: 0.7rem;
+        height: 0.7rem;
+        top: 0.3rem;
+        right: 0.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Google</h1>
+    <div class="timeline">
+      <div class="step completed">
+        <div class="content">
+          <h2>Preliminary Phone Screen</h2>
+          <p>2025 April-9</p>
+        </div>
+      </div>
+
+      <div class="step completed">
+        <div class="content">
+          <h2>Collect Preliminary Screen Feedback</h2>
+          <p>2025 April-9</p>
+        </div>
+      </div>
+
+      <div class="step completed">
+        <div class="content">
+          <h2>Initial role matching</h2>
+          <p>2025 April-9</p>
+        </div>
+      </div>
+
+      <div class="step in-progress" onclick="toggleExpand(this)">
+        <div class="content">
+          <h2>Coding rounds</h2>
+          <div class="expandable-content">
+            <div class="sub-timeline">
+              <div class="sub-step in-progress">
+                <div class="sub-content">
+                  <h3>Round 1</h3>
+                  <p>2025 April-30</p>
+                </div>
+              </div>
+              <div class="sub-step ">
+                <div class="sub-content">
+                  <h3>Round 2</h3>
+                </div>
+              </div>
+              <div class="sub-step">
+                <div class="sub-content">
+                  <h3>Round 3</h3>
+                </div>
+              </div>
+              <div class="sub-step">
+                <div class="sub-content">
+                  <h3>Round 4</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="content">
+          <h2>Collect Virtual Interview Feedback</h2>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="content">
+          <h2>Final Approvals</h2>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function toggleExpand(element) {
+      const content = element.querySelector('.expandable-content');
+      content.classList.toggle('active');
+    }
+  </script>
+</body>
+</html>
